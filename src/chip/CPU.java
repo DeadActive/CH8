@@ -314,6 +314,7 @@ public class CPU {
 			break;
 		
 		case 0xd000:
+			try{
 			int xx = V[(opcode & 0x0f00)>>8];
 			int yy = V[(opcode & 0x00f0)>>4];
 			int height = opcode & 0x000f;
@@ -340,6 +341,12 @@ public class CPU {
 			needRedraw = true;
 			System.out.println("Drawing sprite on (" + xx + ";" + yy + ") from " + height);
 			break;
+			}
+			catch(ArrayIndexOutOfBoundsException e){
+				PC += 2;
+				needRedraw = true;
+				break;
+			}
 		
 		case 0xe000:
 			switch (opcode & 0x00ff){
@@ -376,7 +383,6 @@ public class CPU {
 			switch(opcode & 0x00ff){
 			case 0x000a:
 				x = (opcode & 0x0f00)>>8;
-				byte[] oldKeys = keys;
 				boolean flag = false;
 				for(;;){
 					for (int i=0;i<keys.length;i++){
@@ -425,7 +431,7 @@ public class CPU {
 				x = (opcode & 0x0f00) >> 8;
 				
 				for(int i=0;i<x;i++){
-					V[i] = memory[I + i];
+					V[i] = memory[I + 1];
 				}
 				PC += 2;
 				break;
@@ -485,7 +491,7 @@ public class CPU {
 		}
 	}
 	
-	static public void debug(){
+	static public void ramDump(){
 		for(int i = 0;i<4096;i++){
 			if(i == 0x200) System.out.println("------------Game ROM------------");
 			System.out.print(i + " ");

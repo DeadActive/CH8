@@ -2,10 +2,18 @@ package chip;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 
 
@@ -15,8 +23,10 @@ public class ChipFrame extends JFrame implements KeyListener{
 	 */
 	private static final long serialVersionUID = 1297479392899666409L;
 	private ChipPanel panel;
+	private MenuBar menubar;
 	private int[] keyBuffer;
 	private int[] keyIdToKey;
+	private JFileChooser od;
 	
 	public ChipFrame(){
 		setPreferredSize(new Dimension(640,320));
@@ -27,6 +37,29 @@ public class ChipFrame extends JFrame implements KeyListener{
 		add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Chip - 8");
+		
+		od = new JFileChooser("D://");
+		
+		menubar = new MenuBar();
+		Menu file = new Menu("File");
+		
+		MenuItem open = new MenuItem("Open");
+		open.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				od.showOpenDialog(null);
+				CPU.loadRom(od.getSelectedFile());
+				ChipMain.runFlag = true;
+				CpuThread cpu = new CpuThread();
+			}
+		});
+		
+		file.add(open);
+		menubar.add(file);
+		
+		this.setMenuBar(menubar);
+		
 		pack();
 		setVisible(true);
 		addKeyListener(this);
