@@ -13,7 +13,7 @@ public class ChipMain extends Thread{
 	public static void main(String args[]){
 		CPU.init();
 		
-		ChipMain main = new ChipMain(args[0]);
+		ChipMain main = new ChipMain("");
 
 		main.start();
 	}
