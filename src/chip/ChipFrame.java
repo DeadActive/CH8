@@ -12,8 +12,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 
 
@@ -29,16 +27,15 @@ public class ChipFrame extends JFrame implements KeyListener{
 	private JFileChooser od;
 	
 	public ChipFrame(){
-		setPreferredSize(new Dimension(640,320));
+		setPreferredSize(new Dimension(660,380));
 		pack();
 		setPreferredSize(new Dimension(640 + getInsets().left + getInsets().right,320 + getInsets().top + getInsets().bottom));
 		panel = new ChipPanel();
 		setLayout(new BorderLayout());
-		add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Chip - 8");
+		setTitle("CH8");
 		
-		od = new JFileChooser("D://");
+		od = new JFileChooser("D://javaproj1//CH8//roms");
 		
 		menubar = new MenuBar();
 		Menu file = new Menu("File");
@@ -48,10 +45,11 @@ public class ChipFrame extends JFrame implements KeyListener{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				CPU.init();
 				od.showOpenDialog(null);
 				CPU.loadRom(od.getSelectedFile());
 				ChipMain.runFlag = true;
-				CpuThread cpu = new CpuThread();
+				new CpuThread();
 			}
 		});
 		
@@ -60,7 +58,7 @@ public class ChipFrame extends JFrame implements KeyListener{
 		
 		this.setMenuBar(menubar);
 		
-		pack();
+		add(panel);
 		setVisible(true);
 		addKeyListener(this);
 		

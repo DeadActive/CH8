@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class ChipPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5532772509883739069L;
+
 	public void paint(Graphics g){
 		byte[] display = CPU.screen;
 		for (int i = 0;i<display.length;i++){

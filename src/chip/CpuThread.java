@@ -17,7 +17,7 @@ public class CpuThread implements Runnable {
 				CPU.removeRedraw();
 			}
 			try{
-				t.sleep(1);
+				Thread.sleep(2);
 			}
 			catch(Exception e){
 				System.err.println(e);

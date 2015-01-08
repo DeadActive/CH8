@@ -1,7 +1,5 @@
 package chip;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 
 public class ChipMain extends Thread{
 	
@@ -10,7 +8,7 @@ public class ChipMain extends Thread{
 	
 	public ChipMain(String name){
 		frame = new ChipFrame();
-		frame.setTitle("Chip8 - " + name);
+		frame.setTitle("CH8 - " + name);
 	}
 	public static void main(String args[]){
 		CPU.init();
@@ -32,7 +30,7 @@ public class ChipMain extends Thread{
 					CPU.delay_timer--;
 				if(CPU.sound_timer > 0)
 					CPU.sound_timer--;
-		
+				
 				try{
 					Thread.sleep(16);
 				}

@@ -1,13 +1,9 @@
 package chip;
 
-import java.awt.im.InputContext;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.util.Random;
 
 public class CPU {
@@ -339,7 +335,7 @@ public class CPU {
 			}
 			PC += 2;
 			needRedraw = true;
-			System.out.println("Drawing sprite on (" + xx + ";" + yy + ") from " + height);
+			System.out.println("Drawing sprite on (" + xx + ";" + yy + ";" + height + ")");
 			break;
 			}
 			catch(ArrayIndexOutOfBoundsException e){
@@ -437,22 +433,22 @@ public class CPU {
 				break;
 			case 0x0007:
 				x = (opcode & 0x0f00) >> 8;
-				V[x] = delay_timer;
+				V[x] = (char)delay_timer;
 				PC += 2;
 				break;
 			case 0x0015:
 				x = (opcode & 0x0f00) >> 8;
-				delay_timer = V[x];
+				delay_timer = (char)V[x];
 				PC += 2;
 				break;
 			case 0x0018:
 				x = (opcode & 0x0f00) >> 8;
-				sound_timer = V[x];
+				sound_timer = (char)V[x];
 				PC += 2;
 				break;
 			case 0x001e:
 				x = (opcode & 0x0f00) >> 8;
-				I += V[x];
+				I += (char)V[x];
 				System.out.println("Adding " + Integer.toHexString(x) + " to I");
 				PC +=2;
 				break;
@@ -472,6 +468,7 @@ public class CPU {
 
 	}
 	
+	@SuppressWarnings("resource")
 	static public void loadRom(File file){
 		try {
 			DataInputStream f = new DataInputStream(new FileInputStream(file));
